@@ -17,7 +17,7 @@
     "type": "Bundle",
     "autoload": {
         "psr-4": {
-            "Scheduler\\": "src/"
+            "Jackal\\Scheduler\\": "src/"
         }
     },
     "minimum-stability": "dev",
