@@ -1,0 +1,25 @@
+{
+    "name": "jackal/scheduler",
+    "description": "Bundle to exec scheduled operation",
+    "authors": [
+        {
+            "name": "Luca Giacalone",
+            "email": "luca.giacalone@gmail.com"
+        }
+    ],
+    "require":{
+        "symfony/symfony": "~2.5"
+    },
+    "require-dev": {
+        "mockery/mockery": "~0.9",
+        "phpunit/phpunit": "~4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jackal\\SchedulerBundle\\": "src/"
+        }
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
