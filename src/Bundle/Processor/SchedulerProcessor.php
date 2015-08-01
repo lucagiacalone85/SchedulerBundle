@@ -35,7 +35,7 @@ class SchedulerProcessor
     {
         foreach ($this->actions as $action) {
             if ($action->isTimeToWakeUp()) {
-                $action->getName();
+                echo $action->getName();
             }
         }
     }
