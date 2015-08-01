@@ -6,7 +6,7 @@
  * Time: 22:51
  */
 
-namespace Jackal\SchedulerBundle\Cron;
+namespace Jackal\Scheduler\Bundle\Cron;
 
 
 class CronDay

@@ -6,7 +6,7 @@
  * Time: 17:40.
  */
 
-namespace Jackal\SchedulerBundle\Cron;
+namespace Jackal\Scheduler\Bundle\Cron;
 
 class CronEveryDayAt extends Cron
 {
@@ -15,6 +15,6 @@ class CronEveryDayAt extends Cron
      */
     public function __construct($hour)
     {
-        parent::__construct(null,0, $hour, null, null, null);
+        parent::__construct(0,0, $hour, null, null, null);
     }
 }

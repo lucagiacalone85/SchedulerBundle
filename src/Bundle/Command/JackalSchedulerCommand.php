@@ -1,10 +1,12 @@
 <?php
 
-namespace Jackal\SchedulerBundle;
+namespace Jackal\Scheduler\Bundle\Command;
 
+use Jackal\Scheduler\Bundle\Processor\SchedulerProcessor;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 /**
  * Created by PhpStorm.
@@ -19,7 +21,7 @@ class JackalSchedulerCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('jackal:scheduler')->addOption('list');
+        $this->setName('jackal:scheduler:runner')->addOption('list');
     }
 
     /**
@@ -30,7 +32,7 @@ class JackalSchedulerCommand extends ContainerAwareCommand
      * execute() method, you set the code to execute by passing
      * a Closure to the setCode() method.
      *
-     * @param InputInterface $input An InputInterface instance
+     * @param InputInterface  $input  An InputInterface instance
      * @param OutputInterface $output An OutputInterface instance
      *
      * @return null|int null or 0 if everything went fine, or an error code
@@ -41,8 +43,24 @@ class JackalSchedulerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        /** @var SchedulerProcessor $processor */
+        $processor = $this->getContainer()->get('jackal_scheduler.processor');
 
+        if ([] == $processor->getActionsList()) {
+            $output->writeln('<error>No Command registered</error>');
+        }
+
+        if ($input->getOption('list')) {
+            foreach ($processor->getActionsList() as $action) {
+                /* @var ParameterBag $action */
+                $output->writeln(sprintf('| %s | %s | %s |',
+                    $action->get('name'),
+                    $action->get('class'),
+                    $action->get('schedule')
+                ));
+            }
+        } else {
+            $processor->run();
+        }
     }
-
-
 }

@@ -6,8 +6,7 @@
  * Time: 19:56
  */
 
-namespace Jackal\SchedulerBundle\Tests\Cron;
-
+namespace Jackal\Scheduler\Bundle\Tests\Cron;
 
 interface BaseCronTestInterface
 {

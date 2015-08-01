@@ -6,12 +6,32 @@
  * Time: 17:15.
  */
 
-namespace Jackal\SchedulerBundle\Processor;
+namespace Jackal\Scheduler\Bundle\Processor;
 
-use Jackal\SchedulerBundle\Action\ScheduledAction;
+use Jackal\Scheduler\Bundle\Action\ScheduledAction;
+use Symfony\Bridge\Monolog\Logger;
+use Symfony\Component\HttpFoundation\ParameterBag;
+use Symfony\Component\Process\Process;
 
 class SchedulerProcessor
 {
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+    /**
+     * @var string
+     */
+    private $kernelRootDir;
+
+    function __construct(Logger $logger,$kernelRootDir)
+    {
+        $this->logger = $logger;
+        $this->kernelRootDir = $kernelRootDir;
+    }
+
+
     /**
      * @var ScheduledAction[]
      */
@@ -25,18 +45,26 @@ class SchedulerProcessor
     public function getActionsList()
     {
         return array_reduce($this->actions, function ($list, ScheduledAction $action) {
-            $list[] = get_class($action);
-
+            $list[] = new ParameterBag([
+                'class' => get_class($action),
+                'name'  => $action->getName(),
+                'schedule' => $action->getScheduleDescription()
+            ]);
             return $list;
         }, []);
     }
 
     public function run()
     {
-        foreach ($this->actions as $action) {
-            if ($action->isTimeToWakeUp()) {
-                echo $action->getName();
+        while(true) {
+            foreach ($this->actions as $action) {
+                if ($action->isTimeToWakeUp()) {
+                    $this->logger->addDebug(sprintf('Jackal Scheduler - Calling %s', $action->getName()));
+                    $process = new Process('php console '.$action->getName(),$this->kernelRootDir);
+                    $process->start();
+                }
             }
+            sleep(1);
         }
     }
 }

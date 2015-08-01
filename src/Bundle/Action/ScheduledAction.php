@@ -6,9 +6,9 @@
  * Time: 23:27.
  */
 
-namespace Jackal\SchedulerBundle\Action;
+namespace Jackal\Scheduler\Bundle\Action;
 
-use Jackal\SchedulerBundle\Cron\Cron;
+use Jackal\Scheduler\Bundle\Cron\Cron;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
 abstract class ScheduledAction extends ContainerAwareCommand
@@ -30,6 +30,10 @@ abstract class ScheduledAction extends ContainerAwareCommand
     public function isTimeToWakeUp()
     {
         return $this->cron->isTimeToWakeUp();
+    }
+
+    public function getScheduleDescription(){
+        return (string) $this->cron;
     }
 
 

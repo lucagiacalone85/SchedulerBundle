@@ -6,12 +6,12 @@
  * Time: 20:11
  */
 
-namespace Jackal\SchedulerBundle\Tests\Cron;
+namespace Jackal\Scheduler\Bundle\Tests\Cron;
 
 
-use Jackal\SchedulerBundle\Cron\CronEveryMinute;
+use Jackal\Scheduler\Bundle\Cron\CronEveryMinute;
 
-class CronEveryMinuteTest extends BaseCronTest implements BaseCronTestInterface
+class CronEveryMinuteTest extends BaseCronTest
 {
 
     /**

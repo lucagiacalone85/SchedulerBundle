@@ -1,3 +1,0 @@
-jackal_scheduler_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: JackalSchedulerBundle:Default:index }

@@ -6,7 +6,7 @@
  * Time: 17:38.
  */
 
-namespace Jackal\SchedulerBundle\Cron;
+namespace Jackal\Scheduler\Bundle\Cron;
 
 class CronEveryMinute extends Cron
 {

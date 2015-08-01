@@ -6,7 +6,7 @@
  * Time: 22:58.
  */
 
-namespace Jackal\SchedulerBundle\Cron;
+namespace Jackal\Scheduler\Bundle\Cron;
 
 class CronEveryTuesdayAt extends Cron
 {

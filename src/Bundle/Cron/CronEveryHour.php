@@ -6,7 +6,7 @@
  * Time: 17:39
  */
 
-namespace Jackal\SchedulerBundle\Cron;
+namespace Jackal\Scheduler\Bundle\Cron;
 
 
 class CronEveryHour extends Cron

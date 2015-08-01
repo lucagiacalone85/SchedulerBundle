@@ -1,6 +1,6 @@
 <?php
 
-namespace Jackal\SchedulerBundle\Cron;
+namespace Jackal\Scheduler\Bundle\Cron;
 
 /**
  * Created by PhpStorm.
@@ -104,4 +104,19 @@ abstract class Cron
     {
         return $this->matchTime(new \DateTime('now'));
     }
+
+
+    function __toString()
+    {
+        return sprintf('%s %s %s %s %s %s',
+            $this->second === null ? '*' : $this->second,
+            $this->minute === null ? '*' : $this->minute,
+            $this->hour === null ? '*' : $this->hour,
+            $this->day === null ? '*' : $this->day,
+            $this->month === null ? '*' : $this->month,
+            $this->dayOfWeek === null ? '*' : $this->dayOfWeek
+        );
+    }
+
+
 }

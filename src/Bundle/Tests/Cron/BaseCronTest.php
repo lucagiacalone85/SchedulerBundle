@@ -6,9 +6,9 @@
  * Time: 19:29.
  */
 
-namespace Jackal\SchedulerBundle\Tests\Cron;
+namespace Jackal\Scheduler\Bundle\Tests\Cron;
 
-use Jackal\SchedulerBundle\Cron\Cron;
+use Jackal\Scheduler\Bundle\Cron\Cron;
 
 abstract class BaseCronTest extends \PHPUnit_Framework_TestCase
 {

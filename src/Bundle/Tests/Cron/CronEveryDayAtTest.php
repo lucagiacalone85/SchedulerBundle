@@ -6,12 +6,11 @@
  * Time: 19:26
  */
 
-namespace Jackal\SchedulerBundle\Tests\Cron;
+namespace Jackal\Scheduler\Bundle\Tests\Cron;
 
+use Jackal\Scheduler\Bundle\Cron\CronEveryDayAt;
 
-use Jackal\SchedulerBundle\Cron\CronEveryDayAt;
-
-class CronEveryDayAtTest extends BaseCronTest implements BaseCronTestInterface
+class CronEveryDayAtTest extends BaseCronTest
 {
     /**
      * @dataProvider getValidDateTimes()
@@ -42,6 +41,7 @@ class CronEveryDayAtTest extends BaseCronTest implements BaseCronTestInterface
     public function getInvalidDateTimes(){
         return [
             [5,\DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 04:01:00')],
+            [4,\DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 04:00:01')],
             [5,\DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 04:59:00')],
             [5,\DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 05:01:00')],
             [3,\DateTime::createFromFormat('Y-m-d H:i:s','2013-01-01 15:00:00')],
