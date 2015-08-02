@@ -1,5 +1,9 @@
 services:
 
+    jackal_scheduler.process_executor:
+        class: Jackal\Scheduler\Bundle\Processor\ProcessExecutor
+        arguments: [@logger,%kernel.root_dir%]
+
     jackal_scheduler.processor:
         class: Jackal\Scheduler\Bundle\Processor\SchedulerProcessor
-        arguments: [@logger,%kernel.root_dir%]
+        arguments: [@jackal_scheduler.process_executor]

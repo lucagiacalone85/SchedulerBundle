@@ -16,19 +16,13 @@ use Symfony\Component\Process\Process;
 class SchedulerProcessor
 {
     /**
-     * @var Logger
+     * @var ProcessExecutor
      */
-    private $logger;
+    private $processExecutor;
 
-    /**
-     * @var string
-     */
-    private $kernelRootDir;
-
-    function __construct(Logger $logger,$kernelRootDir)
+    function __construct(ProcessExecutor $processExecutor)
     {
-        $this->logger = $logger;
-        $this->kernelRootDir = $kernelRootDir;
+        $this->processExecutor = $processExecutor;
     }
 
 
@@ -54,14 +48,12 @@ class SchedulerProcessor
         }, []);
     }
 
-    public function run()
+    public function run($commandName = null)
     {
         while(true) {
             foreach ($this->actions as $action) {
-                if ($action->isTimeToWakeUp()) {
-                    $this->logger->addDebug(sprintf('Jackal Scheduler - Calling %s', $action->getName()));
-                    $process = new Process('php console '.$action->getName(),$this->kernelRootDir);
-                    $process->start();
+                if ($action->isTimeToWakeUp() and ($commandName === null or $action->getName() == $commandName)) {
+                    $this->processExecutor->enqueue($action->getName());
                 }
             }
             sleep(1);

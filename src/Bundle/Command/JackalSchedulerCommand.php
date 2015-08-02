@@ -51,14 +51,18 @@ class JackalSchedulerCommand extends ContainerAwareCommand
         }
 
         if ($input->getOption('list')) {
+            $output->writeln(str_pad('-', 107, '-'));
+            $output->writeln(sprintf('| %s| %s| %s|', str_pad('name', 30), str_pad('class', 50), str_pad('schedule', 20)));
+            $output->writeln(str_pad('-', 107, '-'));
             foreach ($processor->getActionsList() as $action) {
                 /* @var ParameterBag $action */
-                $output->writeln(sprintf('| %s | %s | %s |',
-                    $action->get('name'),
-                    $action->get('class'),
-                    $action->get('schedule')
+                $output->writeln(sprintf('| %s| %s| %s|',
+                    str_pad($action->get('name'), 30),
+                    str_pad($action->get('class'), 50),
+                    str_pad($action->get('schedule'), 20)
                 ));
             }
+            $output->writeln(str_pad('-', 107, '-'));
         } else {
             $processor->run();
         }
