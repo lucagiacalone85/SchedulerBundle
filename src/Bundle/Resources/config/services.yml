@@ -1,9 +1,21 @@
 services:
 
-    jackal_scheduler.process_executor:
-        class: Jackal\Scheduler\Bundle\Processor\ProcessExecutor
-        arguments: [@logger,%kernel.root_dir%]
+    jackal_scheduler.process.queue:
+        class: Jackal\Scheduler\Bundle\Processor\ProcessQueue
+        arguments: [%kernel.root_dir%]
 
     jackal_scheduler.processor:
         class: Jackal\Scheduler\Bundle\Processor\SchedulerProcessor
-        arguments: [@jackal_scheduler.process_executor]
+        arguments: [@jackal_scheduler.process.queue]
+
+    jackal_scheduler.command.queue:
+        class: Jackal\Scheduler\Bundle\Command\JackalSchedulerCommand
+        arguments: [@jackal_scheduler.processor]
+        tags:
+         -  { name: console.command }
+
+    jackal_scheduler.command.process_container:
+        class: Jackal\Scheduler\Bundle\Command\ProcessContainerCommand
+        arguments: [@logger,'%kernel.root_dir%']
+        tags:
+         -  { name: console.command }

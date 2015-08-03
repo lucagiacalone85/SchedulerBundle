@@ -8,33 +8,20 @@
 
 namespace Jackal\Scheduler\Bundle\Action;
 
-use Jackal\Scheduler\Bundle\Cron\Cron;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
-abstract class ScheduledAction extends ContainerAwareCommand
+abstract class ScheduledAction extends ContainerAwareCommand implements ScheduledActionInterface
 {
-    /**
-     * @var Cron
-     */
-    private $cron;
-
-    public function __construct(Cron $cron)
-    {
-        $this->cron = $cron;
-        parent::__construct(null);
-    }
-
     /**
      * @return bool
      */
     public function isTimeToWakeUp()
     {
-        return $this->cron->isTimeToWakeUp();
+        return $this->getScheduleCron()->isTimeToWakeUp();
     }
 
-    public function getScheduleDescription(){
-        return (string) $this->cron;
+    public function getScheduleDescription()
+    {
+        return (string) $this->getScheduleCron();
     }
-
-
 }

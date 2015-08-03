@@ -8,7 +8,8 @@
         }
     ],
     "require":{
-        "symfony/symfony": "~2.5"
+        "symfony/symfony": "~2.5",
+        "symfony/monolog-bundle": "~2.5"
     },
     "require-dev": {
         "mockery/mockery": "~0.9",

@@ -12,22 +12,15 @@ namespace Jackal\Scheduler\Bundle\Processor;
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Process\Process;
 
-class ProcessExecutor
+class ProcessQueue
 {
-
-    /**
-     * @var Logger
-     */
-    private $logger;
-
     /**
      * @var string
      */
     private $kernelRootDir;
 
-    function __construct(Logger $logger,$kernelRootDir)
+    function __construct($kernelRootDir)
     {
-        $this->logger = $logger;
         $this->kernelRootDir = $kernelRootDir;
     }
 

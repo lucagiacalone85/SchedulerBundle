@@ -9,20 +9,19 @@
 namespace Jackal\Scheduler\Bundle\Processor;
 
 use Jackal\Scheduler\Bundle\Action\ScheduledAction;
-use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\HttpFoundation\ParameterBag;
-use Symfony\Component\Process\Process;
+
 
 class SchedulerProcessor
 {
     /**
-     * @var ProcessExecutor
+     * @var ProcessQueue
      */
-    private $processExecutor;
+    private $processQueue;
 
-    function __construct(ProcessExecutor $processExecutor)
+    function __construct(ProcessQueue $processQueue)
     {
-        $this->processExecutor = $processExecutor;
+        $this->processQueue = $processQueue;
     }
 
 
@@ -53,7 +52,7 @@ class SchedulerProcessor
         while(true) {
             foreach ($this->actions as $action) {
                 if ($action->isTimeToWakeUp() and ($commandName === null or $action->getName() == $commandName)) {
-                    $this->processExecutor->enqueue($action->getName());
+                    $this->processQueue->enqueue($action->getName());
                 }
             }
             sleep(1);

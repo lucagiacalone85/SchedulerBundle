@@ -17,6 +17,17 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 class JackalSchedulerCommand extends ContainerAwareCommand
 {
     /**
+     * @var SchedulerProcessor
+     */
+    private $schedulerProcessor;
+
+    public function __construct(SchedulerProcessor $schedulerProcessor)
+    {
+        $this->schedulerProcessor = $schedulerProcessor;
+        parent::__construct();
+    }
+
+    /**
      * Configures the current command.
      */
     protected function configure()
@@ -43,10 +54,8 @@ class JackalSchedulerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /** @var SchedulerProcessor $processor */
-        $processor = $this->getContainer()->get('jackal_scheduler.processor');
 
-        if ([] == $processor->getActionsList()) {
+        if ([] == $this->schedulerProcessor->getActionsList()) {
             $output->writeln('<error>No Command registered</error>');
         }
 
@@ -54,7 +63,7 @@ class JackalSchedulerCommand extends ContainerAwareCommand
             $output->writeln(str_pad('-', 107, '-'));
             $output->writeln(sprintf('| %s| %s| %s|', str_pad('name', 30), str_pad('class', 50), str_pad('schedule', 20)));
             $output->writeln(str_pad('-', 107, '-'));
-            foreach ($processor->getActionsList() as $action) {
+            foreach ($this->schedulerProcessor->getActionsList() as $action) {
                 /* @var ParameterBag $action */
                 $output->writeln(sprintf('| %s| %s| %s|',
                     str_pad($action->get('name'), 30),
@@ -64,7 +73,7 @@ class JackalSchedulerCommand extends ContainerAwareCommand
             }
             $output->writeln(str_pad('-', 107, '-'));
         } else {
-            $processor->run();
+            $this->schedulerProcessor->run();
         }
     }
 }

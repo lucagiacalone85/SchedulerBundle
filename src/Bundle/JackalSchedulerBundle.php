@@ -12,5 +12,6 @@ class JackalSchedulerBundle extends Bundle
     {
         parent::build($container);
         $container->addCompilerPass(new JackalSchedulerCompilerPass());
+        
     }
 }
