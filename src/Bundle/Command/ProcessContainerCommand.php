@@ -37,21 +37,9 @@ class ProcessContainerCommand extends ContainerAwareCommand
     }
 
     /**
-     * Executes the current command.
-     *
-     * This method is not abstract because you can use this class
-     * as a concrete class. In this case, instead of defining the
-     * execute() method, you set the code to execute by passing
-     * a Closure to the setCode() method.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
-     * @return null|int null or 0 if everything went fine, or an error code
-     *
-     * @throws \LogicException When this abstract method is not implemented
-     *
-     * @see setCode()
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -70,7 +58,7 @@ class ProcessContainerCommand extends ContainerAwareCommand
         }
 
         if ($process->isSuccessful()) {
-            $this->logger->addDebug(sprintf('%s - Executed',$process->getOutput()));
+            $this->logger->addDebug(sprintf('Executed %s - PID %s',$processName, $processPid));
         } else {
             $this->logger->addError(sprintf('%s - ERROR: %s',$processName,$process->getErrorOutput()));
         }

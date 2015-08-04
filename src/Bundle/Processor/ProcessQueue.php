@@ -25,7 +25,13 @@ class ProcessQueue
     }
 
     public function enqueue($processName){
-        $process = new Process('php console jackal:process:container '.$processName,$this->kernelRootDir);
+
+        $process = new Process(sprintf('%s %s %s %s',
+            'php',
+            'console',
+            'jackal:process:container',
+            $processName
+        ),$this->kernelRootDir);
         $process->start();
     }
 }
