@@ -53,7 +53,7 @@ class SchedulerProcessor
 
     public function run($commandName = null)
     {
-        while (true) {
+        for($i=0;$i<60;$i++){
             foreach ($this->actions as $action) {
                 if ($action->isTimeToWakeUp() and ($commandName === null or $action->getName() == $commandName)) {
                     $this->processQueue->enqueue($action->getName());
@@ -61,6 +61,22 @@ class SchedulerProcessor
             }
             sleep(1);
         }
+    }
+
+    public function dumpTitle(OutputInterface $output){
+        $output->writeln("       _            _         _    _____      _              _       _             _____
+      | |          | |       | |  / ____|    | |            | |     | |           |  __ \
+      | | __ _  ___| | ____ _| | | (___   ___| |__   ___  __| |_   _| | ___ _ __  | |__) |   _ _ __  _ __   ___ _ __
+  _   | |/ _` |/ __| |/ / _` | |  \___ \ / __| '_ \ / _ \/ _` | | | | |/ _ \ '__| |  _  / | | | '_ \| '_ \ / _ \ '__|
+ | |__| | (_| | (__|   < (_| | |  ____) | (__| | | |  __/ (_| | |_| | |  __/ |    | | \ \ |_| | | | | | | |  __/ |
+  \____/ \__,_|\___|_|\_\__,_|_| |_____/ \___|_| |_|\___|\__,_|\__,_|_|\___|_|    |_|  \_\__,_|_| |_|_| |_|\___|_|
+
+                                                                                                                     ");
+    }
+
+    public function dumpHelp(OutputInterface $output){
+        $output->writeln('Add this line to your crontab file');
+        $output->writeln('* * * * * {user} {path-to-your-app}/app/console jackal:scheduler:runner');
     }
 
     public function dumpActionsList(OutputInterface $output)

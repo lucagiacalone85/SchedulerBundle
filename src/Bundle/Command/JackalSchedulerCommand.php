@@ -32,7 +32,9 @@ class JackalSchedulerCommand extends ContainerAwareCommand
      */
     protected function configure()
     {
-        $this->setName('jackal:scheduler:runner')->addArgument('command_name',InputArgument::OPTIONAL)->addOption('list');
+        $this->setName('jackal:scheduler:runner')
+             ->addArgument('command_name', InputArgument::OPTIONAL)
+             ->addOption('list',null,null,'Display all registered command to execute');
     }
 
     /**
@@ -54,18 +56,22 @@ class JackalSchedulerCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->schedulerProcessor->dumpTitle($output);
+
         if ([] == $this->schedulerProcessor->getActionsList()) {
             $output->writeln('<error>No Command registered</error>');
         }
 
         if ($input->getOption('list')) {
             $this->schedulerProcessor->dumpActionsList($output);
-        } else {
-            $commandName = $input->getArgument('command_name') ? $input->getArgument('command_name') : null;
-            if(!$commandName and $this->schedulerProcessor->isRegistered($commandName)){
-                throw new \Exception(sprintf('command with name \'%s\' is not registered to scheduler',$commandName));
-            }
-            $this->schedulerProcessor->run($commandName);
+
+            return;
         }
+
+        $commandName = $input->getArgument('command_name') ? $input->getArgument('command_name') : null;
+        if (!$commandName and $this->schedulerProcessor->isRegistered($commandName)) {
+            throw new \Exception(sprintf('command with name \'%s\' is not registered to scheduler', $commandName));
+        }
+        $this->schedulerProcessor->run($commandName);
     }
 }

@@ -2,7 +2,9 @@ services:
 
     jackal_scheduler.process.queue:
         class: Jackal\Scheduler\Bundle\Processor\ProcessQueue
-        arguments: [%kernel.root_dir%]
+        arguments: [%kernel.root_dir%,@logger]
+        tags:
+         -  { name: monolog.logger, channel: scheduler }
 
     jackal_scheduler.processor:
         class: Jackal\Scheduler\Bundle\Processor\SchedulerProcessor

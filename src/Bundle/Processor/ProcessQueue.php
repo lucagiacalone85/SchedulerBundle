@@ -19,13 +19,20 @@ class ProcessQueue
      */
     private $kernelRootDir;
 
-    function __construct($kernelRootDir)
+    /**
+     * @var Logger
+     */
+    private $logger;
+
+    function __construct($kernelRootDir,Logger $logger)
     {
+        $this->logger = $logger;
         $this->kernelRootDir = $kernelRootDir;
     }
 
     public function enqueue($processName){
 
+        $this->logger->addDebug(sprintf('Enqueue %s',$processName));
         $process = new Process(sprintf('%s %s %s %s',
             'php',
             'console',
