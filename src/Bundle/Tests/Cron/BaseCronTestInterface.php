@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lucagiacalone
- * Date: 31/07/15
- * Time: 19:56
- */
 
 namespace Jackal\Scheduler\Bundle\Tests\Cron;
 

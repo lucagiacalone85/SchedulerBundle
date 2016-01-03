@@ -19,7 +19,7 @@ class JackalSchedulerCompilerPass implements CompilerPassInterface
     public function process(ContainerBuilder $container)
     {
         $definition = $container->findDefinition(
-            'jackal_scheduler.processor'
+            'jackal_scheduler.command.manager'
         );
 
         $taggedServices = $container->findTaggedServiceIds(
@@ -27,7 +27,7 @@ class JackalSchedulerCompilerPass implements CompilerPassInterface
         );
         foreach ($taggedServices as $id => $tags) {
             $definition->addMethodCall(
-                'addScheduledAction',
+                'addScheduledCommand',
                 array(new Reference($id))
             );
         }

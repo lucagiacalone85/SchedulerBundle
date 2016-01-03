@@ -58,7 +58,7 @@ class ProcessContainerCommand extends ContainerAwareCommand
         }
 
         if ($process->isSuccessful()) {
-            $this->logger->debug(sprintf('Executed %s - PID %s',$processName, $processPid));
+            $this->logger->debug(sprintf('Executed %s - PID %s - OUTPUT: %s',$processName, $processPid,$process->getOutput()));
         } else {
             $this->logger->debug(sprintf('ERROR - %s: %s',$processName,$process->getErrorOutput()));
         }

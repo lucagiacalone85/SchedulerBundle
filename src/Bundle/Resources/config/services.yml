@@ -1,18 +1,18 @@
 services:
 
     jackal_scheduler.process.queue:
-        class: Jackal\Scheduler\Bundle\Processor\ProcessQueue
+        class: Jackal\Scheduler\Bundle\Queue\CommandQueue
         arguments: [%kernel.root_dir%,@logger]
         tags:
          -  { name: monolog.logger, channel: scheduler }
 
-    jackal_scheduler.processor:
-        class: Jackal\Scheduler\Bundle\Processor\SchedulerProcessor
+    jackal_scheduler.command.manager:
+        class: Jackal\Scheduler\Bundle\Manager\ScheduledCommandManager
         arguments: [@jackal_scheduler.process.queue]
 
     jackal_scheduler.command.scheduler:
-        class: Jackal\Scheduler\Bundle\Command\JackalSchedulerCommand
-        arguments: [@jackal_scheduler.processor]
+        class: Jackal\Scheduler\Bundle\Command\SchedulerCommand
+        arguments: [@jackal_scheduler.command.manager]
         tags:
          -  { name: console.command }
 

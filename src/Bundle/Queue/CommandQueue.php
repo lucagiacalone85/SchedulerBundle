@@ -1,18 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lucagiacalone
- * Date: 02/08/15
- * Time: 13:41
- */
 
-namespace Jackal\Scheduler\Bundle\Processor;
-
+namespace Jackal\Scheduler\Bundle\Queue;
 
 use Symfony\Bridge\Monolog\Logger;
 use Symfony\Component\Process\Process;
 
-class ProcessQueue
+class CommandQueue
 {
     /**
      * @var string

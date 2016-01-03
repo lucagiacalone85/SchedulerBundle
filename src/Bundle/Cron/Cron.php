@@ -2,13 +2,7 @@
 
 namespace Jackal\Scheduler\Bundle\Cron;
 
-/**
- * Created by PhpStorm.
- * User: lucagiacalone
- * Date: 31/07/15
- * Time: 17:20.
- */
-abstract class Cron
+class Cron
 {
     /**
      * @var int
@@ -62,6 +56,133 @@ abstract class Cron
     }
 
     /**
+     * @param $day
+     * @param int $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyMonthAt($day, $hour = 0, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, $day, null, null);
+    }
+
+    /**
+     * @param $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyDayAt($hour, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, null, null, null);
+    }
+
+    /**
+     * @param $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyMondayAt($hour, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, null, null, CronDay::Monday());
+    }
+
+    /**
+     * @param $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyTuesdayAt($hour, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, null, null, CronDay::Tuesday());
+    }
+
+    /**
+     * @param $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyWednesdayAt($hour, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, null, null, CronDay::Wednesday());
+    }
+
+    /**
+     * @param $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyThursdayAt($hour, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, null, null, CronDay::Thursday());
+    }
+
+    /**
+     * @param $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyFridayAt($hour, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, null, null, CronDay::Friday());
+    }
+
+    /**
+     * @param $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everySaturdayAt($hour, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, null, null, CronDay::Saturday());
+    }
+
+    /**
+     * @param $hour
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everySundayAt($hour, $minute = 0, $second = 0)
+    {
+        return new self($second, $minute, $hour, null, null, CronDay::Sunday());
+    }
+
+    /**
+     * @param int $minute
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyHour($minute = 0, $second = 0)
+    {
+        return new self($second, $minute, null, null, null, null);
+    }
+
+    /**
+     * @param int $second
+     * @return Cron
+     */
+    public static function everyMinute($second = 0)
+    {
+        return new self($second, null, null, null, null, null);
+    }
+
+    /**
+     * @return Cron
+     */
+    public static function everySecond()
+    {
+        return new self(null, null, null, null, null, null);
+    }
+
+    /**
      * @param \DateTime
      *
      * @return bool
@@ -78,7 +199,7 @@ abstract class Cron
         ];
 
         foreach ($matchPattern as $pattern => $timePart) {
-            if (!$this->matchTimePart((int) $time->format($pattern), $timePart)) {
+            if (!$this->matchTimePart((int)$time->format($pattern), $timePart)) {
                 return false;
             }
         }
@@ -98,11 +219,12 @@ abstract class Cron
     }
 
     /**
+     * @param \DateTime|null $dateTime
      * @return bool
      */
-    public function isTimeToWakeUp()
+    public function isTimeToWakeUp(\DateTime $dateTime = null)
     {
-        return $this->matchTime(new \DateTime('now'));
+        return $this->matchTime($dateTime === null ? new \DateTime('now') : $dateTime);
     }
 
 
@@ -116,6 +238,54 @@ abstract class Cron
             $this->month === null ? '*' : $this->month,
             $this->dayOfWeek === null ? '*' : $this->dayOfWeek
         );
+    }
+
+    /**
+     * @return int
+     */
+    public function getSecond()
+    {
+        return $this->second;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinute()
+    {
+        return $this->minute;
+    }
+
+    /**
+     * @return int
+     */
+    public function getHour()
+    {
+        return $this->hour;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDay()
+    {
+        return $this->day;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMonth()
+    {
+        return $this->month;
+    }
+
+    /**
+     * @return int
+     */
+    public function getDayOfWeek()
+    {
+        return $this->dayOfWeek;
     }
 
 

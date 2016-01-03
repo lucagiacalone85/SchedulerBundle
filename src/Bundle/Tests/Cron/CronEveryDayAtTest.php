@@ -1,14 +1,8 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lucagiacalone
- * Date: 31/07/15
- * Time: 19:26
- */
 
 namespace Jackal\Scheduler\Bundle\Tests\Cron;
 
-use Jackal\Scheduler\Bundle\Cron\CronEveryDayAt;
+use Jackal\Scheduler\Bundle\Cron\Cron;
 
 class CronEveryDayAtTest extends BaseCronTest
 {
@@ -17,7 +11,7 @@ class CronEveryDayAtTest extends BaseCronTest
      */
     public function itShouldWakeUp($hour,\DateTime $dateTime){
 
-        $cron = new CronEveryDayAt($hour);
+        $cron = Cron::everyDayAt($hour);
         $this->assertValidDateTime($cron,$dateTime);
     }
 
@@ -34,7 +28,7 @@ class CronEveryDayAtTest extends BaseCronTest
      */
     public function itShouldNotWakeUp($hour,\DateTime $dateTime){
 
-        $cron = new CronEveryDayAt($hour);
+        $cron = Cron::everyDayAt($hour);
         $this->assertInvalidDateTime($cron,$dateTime);
     }
 

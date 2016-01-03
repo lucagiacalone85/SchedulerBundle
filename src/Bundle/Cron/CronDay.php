@@ -1,16 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: lucagiacalone
- * Date: 31/07/15
- * Time: 22:51
- */
 
 namespace Jackal\Scheduler\Bundle\Cron;
 
-
-class CronDay
+final class CronDay
 {
+    private $day;
+
+    public function __construct(\DateTime $dateTime){
+        $this->day = $dateTime->format('N');
+    }
+
+    public function getDay(){
+        return $this->day;
+    }
+
     public static function Monday(){
         return 1;
     }
